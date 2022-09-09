@@ -32,3 +32,5 @@ export class OrdersRepository extends Repository<Order> {
     return order;
   }
 }
+
+export default OrdersRepository;
