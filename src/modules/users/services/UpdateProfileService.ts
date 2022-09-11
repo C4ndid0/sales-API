@@ -1,8 +1,8 @@
 import AppError from '@shared/errors/AppError';
 import { compare, hash } from 'bcryptjs';
 import { getCustomRepository } from 'typeorm';
-import User from '../typeorm/entities/User';
-import UsersRepository from '../typeorm/repositories/UsersRepository';
+import User from '../infra/typeorm/entities/User';
+import UsersRepository from '../infra/typeorm/repositories/UsersRepository';
 
 interface IRequest {
   user_id: string;
@@ -38,7 +38,7 @@ class UpdateProfileService {
       throw new AppError('Old password is required.');
     }
     if (password && !old_password) {
-      const checkOldPassword = await compare(old_password, user.password);
+      const checkOldPassword = compare(user.password, old_password);
       if (!checkOldPassword) {
         throw new AppError('Old password does not match.');
       }
